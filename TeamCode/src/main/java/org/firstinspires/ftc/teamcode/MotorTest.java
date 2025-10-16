@@ -111,8 +111,21 @@ public class MotorTest extends OpMode
         // - This uses basic math to combine motions and is easier to drive straight.
         double shooterPower = -gamepad1.left_stick_y;
 
-        leftPower    = Range.clip(shooterPower, -1.0, 1.0) ;
-        rightPower   = Range.clip(shooterPower, -1.0, 1.0) ;
+        leftPower = 0.0;
+        rightPower = 0.0;
+
+        if (gamepad1.y) {
+            leftPower = 0.8;
+            rightPower = 0.8;
+        }
+
+        if (gamepad1.x) {
+            leftPower = 0.676767;
+            rightPower = 0.676767;
+        }
+
+//        leftPower    = Range.clip(shooterPower, -1.0, 0.8) ;
+//        rightPower   = Range.clip(shooterPower, -1.0, 0.8) ;
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
