@@ -54,8 +54,8 @@ public class MotorTest extends OpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor leftShooter = null;
-    private DcMotor rightShooter = null;
+    private DcMotor bottomShooter = null;
+    private DcMotor topShooter = null;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -67,14 +67,13 @@ public class MotorTest extends OpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        leftShooter = hardwareMap.get(DcMotor.class, "left_shooter");
-        rightShooter = hardwareMap.get(DcMotor.class, "right_shooter");
+        bottomShooter = hardwareMap.get(DcMotor.class, "bottom_shooter");
+        topShooter = hardwareMap.get(DcMotor.class, "top_shooter");
+        bottomShooter.setDirection(DcMotor.Direction.REVERSE);
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        leftShooter.setDirection(DcMotor.Direction.FORWARD);
-        rightShooter.setDirection(DcMotor.Direction.REVERSE);
 
         // Tell the driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -101,44 +100,53 @@ public class MotorTest extends OpMode
     @Override
     public void loop() {
         // Setup a variable for each drive wheel to save power level for telemetry
-        double leftPower;
-        double rightPower;
+        double topShooterPower;
+        double bottomShooterPower;
 
         // Choose to drive using either Tank Mode, or POV Mode
         // Comment out the method that's not used.  The default below is POV.
 
         // POV Mode uses left stick to go forward, and right stick to turn.
         // - This uses basic math to combine motions and is easier to drive straight.
-        double shooterPower = -gamepad1.left_stick_y;
 
-        leftPower = 0.0;
-        rightPower = 0.0;
+        topShooterPower = 0.0;
+        bottomShooterPower = 0.0;
 
         if (gamepad1.y) {
-            leftPower = 0.8;
-            rightPower = 0.8;
+            topShooterPower = 0.79;
+            bottomShooterPower = 0.79;
+        }
+
+        if (gamepad1.b) {
+            topShooterPower = 0.78;
+            bottomShooterPower = 0.78;
+        }
+
+        if (gamepad1.a) {
+            topShooterPower = 0.77;
+            bottomShooterPower = 0.77;
         }
 
         if (gamepad1.x) {
-            leftPower = 0.676767;
-            rightPower = 0.676767;
+            topShooterPower = 0.7;
+            bottomShooterPower = 0.7;
         }
 
-//        leftPower    = Range.clip(shooterPower, -1.0, 0.8) ;
-//        rightPower   = Range.clip(shooterPower, -1.0, 0.8) ;
+//        topShooterPower    = Range.clip(shooterPower, -1.0, 0.8) ;
+//        bottomShooterPower   = Range.clip(shooterPower, -1.0, 0.8) ;
 
         // Tank Mode uses one stick to control each wheel.
         // - This requires no math, but it is hard to drive forward slowly and keep straight.
-        // leftPower  = -gamepad1.left_stick_y ;
-        // rightPower = -gamepad1.right_stick_y ;
+        // topShooterPower  = -gamepad1.left_stick_y ;
+        // bottomShooterPower = -gamepad1.right_stick_y ;
 
         // Send calculated power to wheels
-        leftShooter.setPower(leftPower);
-        rightShooter.setPower(rightPower);
+        bottomShooter.setPower(topShooterPower);
+        topShooter.setPower(bottomShooterPower);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+        telemetry.addData("Motors", "left (%.2f), right (%.2f)", topShooterPower, bottomShooterPower);
     }
 
     /*
