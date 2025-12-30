@@ -64,7 +64,8 @@ public class SixSevenDrive extends OpMode {
     private DcMotor bottomShooter = null;
     private DcMotor topShooter = null;
 
-    DcMotor intake;
+    DcMotor inhale;
+    DcMotor indixer;
 
     public Servo servo67;
 
@@ -81,7 +82,8 @@ public class SixSevenDrive extends OpMode {
         bottomShooter = hardwareMap.get(DcMotor.class, "bottom_shooter");
         topShooter = hardwareMap.get(DcMotor.class, "top_shooter");
 
-        intake = hardwareMap.get(DcMotor.class, "intake");
+        inhale = hardwareMap.get(DcMotor.class, "inhale");
+        indixer = hardwareMap.get(DcMotor.class, "indixer");
 
         servo67 = hardwareMap.get(Servo.class, "servo67");
 
@@ -89,8 +91,6 @@ public class SixSevenDrive extends OpMode {
         // motors are opposite to the right ones.
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-
-        topShooter.setDirection(DcMotor.Direction.REVERSE);
 
         // This uses RUN_USING_ENCODER to be more accurate.   If you don't have the encoder
         // wires, you should remove these
@@ -113,17 +113,30 @@ public class SixSevenDrive extends OpMode {
 
     @Override
     public void loop() {
-        telemetry.addLine("Wilson 67 : 67 Drive");
-        telemetry.addLine("Press dpad right to reset Yaw");
-        telemetry.addLine("Hold left bumper to drive in robot relative");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣤⣤⣤⣄⡀ ⠀⠀⠀⠀⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀");
+        telemetry.addLine("⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣷⠀");
+        telemetry.addLine("⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿ ");
+        telemetry.addLine("⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀");
+        telemetry.addLine("⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀");
+        telemetry.addLine("⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀");
+        telemetry.addLine("⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀");
+        telemetry.addLine("⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀");
+        telemetry.addLine("⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀");
+        telemetry.addLine("⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀");
+        telemetry.addLine("⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⣿⣿⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀");
+        telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
 
-        double topShooterPower;
-        double bottomShooterPower;
-        double intakePower;
-
-        topShooterPower = 0.0;
-        bottomShooterPower = 0.0;
-        intakePower = 0.0;
+        double topShooterPower = 0.0;
+        double bottomShooterPower = 0.0;
+        double inhalePower = 0.0;
+        double indixerPower = 0.0;
 
         // If you press the A button, then you reset the Yaw to be zero from the way
         // the robot is currently pointing
@@ -134,29 +147,32 @@ public class SixSevenDrive extends OpMode {
             bottomShooterPower = 0.8;
         }
 
-        //shooting the shooter
+        //short range
         if (gamepad1.x) {
             topShooterPower = 0.7;
             bottomShooterPower = 0.7;
         }
 
-        //these two idk what to use
+        //long range shot
         if (gamepad1.y) {
             topShooterPower = 0.79;
             bottomShooterPower = 0.79;
         }
 
+        //spit the ball out by shooting at low power
         if (gamepad1.b) {
-            topShooterPower = 0.78;
-            bottomShooterPower = 0.78;
+            topShooterPower = 0.21;
+            bottomShooterPower = 0.21;
         }
 
-        //should prolly use this as intake keybind
+        //should prolly use this as inhale & indixer keybind
         if (gamepad1.a) {
-            intakePower = 0.77;
+            inhalePower = 0.77;
+            indixerPower = 0.77;
         }
 
         //These two are for angle
+        //kinda want to just comment out to keep a 40 deg fixed
         if (gamepad1.dpad_up) {
             servo67.setPosition(0);
         }
@@ -179,7 +195,8 @@ public class SixSevenDrive extends OpMode {
 
         bottomShooter.setPower(topShooterPower);
         topShooter.setPower(bottomShooterPower);
-        intake.setPower(intakePower);
+        inhale.setPower(inhalePower);
+        indixer.setPower(indixerPower);
     }
 
 

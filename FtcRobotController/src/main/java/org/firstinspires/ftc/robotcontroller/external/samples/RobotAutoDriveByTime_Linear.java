@@ -120,7 +120,6 @@ public class RobotAutoDriveByTime_Linear extends LinearOpMode {
         // Step 4:  Stop
         leftDrive.setPower(0);
         rightDrive.setPower(0);
-
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);
