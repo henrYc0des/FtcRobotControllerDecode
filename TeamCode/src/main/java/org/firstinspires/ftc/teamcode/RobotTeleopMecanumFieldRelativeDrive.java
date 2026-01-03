@@ -52,9 +52,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  *
  */
-@TeleOp(name = "67 Drive", group = "Robot")
-
-public class SixSevenDrive extends OpMode {
+@TeleOp(name = "Robot: Field Relative Mecanum Drive", group = "Robot")
+@Disabled
+public class RobotTeleopMecanumFieldRelativeDrive extends OpMode {
     // This declares the four motors needed
     DcMotor frontLeftDrive;
     DcMotor frontRightDrive;
@@ -71,7 +71,7 @@ public class SixSevenDrive extends OpMode {
 
     // This declares the IMU needed to get the current direction the robot is facing
     IMU imu;
-//SIX SEVEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
     @Override
     public void init() {
         frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
@@ -92,12 +92,6 @@ public class SixSevenDrive extends OpMode {
         bottomShooter.setDirection(DcMotor.Direction.REVERSE);
         indixer.setDirection(DcMotor.Direction.REVERSE);
 
-        // This uses RUN_USING_ENCODER to be more accurate.   If you don't have the encoder
-        // wires, you should remove these
-//        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-//        backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         imu = hardwareMap.get(IMU.class, "imu");
         // This needs to be changed to match the orientation on your robot
@@ -110,9 +104,6 @@ public class SixSevenDrive extends OpMode {
                 RevHubOrientationOnRobot(logoDirection, usbDirection);
         imu.initialize(new IMU.Parameters(orientationOnRobot));
     }
-
-    private double timestamp = System.currentTimeMillis();
-    private boolean backingUp = false;
 
     @Override
     public void loop() {
@@ -144,73 +135,62 @@ public class SixSevenDrive extends OpMode {
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
 
 
-        //index low power to push ball into shooter wheel
+
+        //revving the shooter ;D
         if (gamepad1.right_trigger > 0.0) {
-            indixerPower = .75;
-            inhalePower = .5;
+            topShooterPower = gamepad1.right_trigger;
+            bottomShooterPower = gamepad1.right_trigger;
         }
 
-        //all
         //short range shot
         if (gamepad1.x) {
-            topShooterPower = 1;
-            bottomShooterPower = 1;
-            inhalePower = .67;
-//            indixerPower = -.5;
-
-        } else {
-            topShooterPower = 0;
-            bottomShooterPower = 0;
-            indixerPower = 0;
+            topShooterPower = 0.7;
+            bottomShooterPower = 0.7;
         }
 
-        if (gamepad1.xWasPressed()) {
-            timestamp = System.currentTimeMillis();
-            backingUp = true;
-            indixerPower = -0.67;
-        }
-
-        if (backingUp && (System.currentTimeMillis() - timestamp) > 1000.0) {
-            indixerPower = 0;
-            backingUp = false;
-        }
-
-        //long range shot not tested yet
+        //long range shot
         if (gamepad1.y) {
             topShooterPower = 0.79;
             bottomShooterPower = 0.79;
         }
 
-        //indexer reverse
+        //just indixer to prevent accidental ball pickup
         if (gamepad1.b) {
-            indixerPower = -.2;
+            indixerPower = 1;
         }
 
         //should prolly use this as inhale & indixer keybind
         if (gamepad1.a) {
             inhalePower = 1;
-            indixerPower = .45;
+            indixerPower = 1;
         }
 
         //These two are for angle
         //kinda want to just comment out to keep a 40 deg fixed
-//        if (gamepad1.dpad_up) {
-//            servo67.setPosition(0);
-//        }
+        //spit the ball out by shooting at low power
+        if (gamepad1.left_bumper) {
+            topShooterPower = 0.21;
+            bottomShooterPower = 0.21;
+        }
 
-//        if (gamepad1.dpad_down) {
-//            servo67.setPosition(.1);
-//        }
+        if (gamepad1.dpad_up) {
+            servo67.setPosition(0);
+        }
+
+        if (gamepad1.dpad_down) {
+            servo67.setPosition(1);
+        }
 
         //yaw reset
-        if (gamepad1.dpad_left) {
+        if (gamepad1.dpad_right) {
             imu.resetYaw();
         }
-        // (much like driving an RC vehicle) hold for robot relative drive
-        if (gamepad1.left_bumper) {
+
+        // (much like driving an RC vehicle)
+        if (gamepad1.dpad_left) {
             drive(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
         } else {
-            driveFieldRelative(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            driveFieldRelative(-gamepad1.left_stick_x, gamepad1.left_stick_y, gamepad1.right_stick_x);
         }
 
         bottomShooter.setPower(topShooterPower);
@@ -218,8 +198,6 @@ public class SixSevenDrive extends OpMode {
         indixer.setPower(indixerPower);
         inhale.setPower(inhalePower);
     }
-
-    //Henryzm
 
     // This routine drives the robot field relative
     private void driveFieldRelative(double forward, double right, double rotate) {

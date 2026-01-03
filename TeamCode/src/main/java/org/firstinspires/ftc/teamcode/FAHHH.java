@@ -29,13 +29,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
-
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 /*
  * This OpMode illustrates how to program your robot to drive field relative.  This means
@@ -51,65 +50,49 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  *
  */
-@TeleOp(name = "Motor Test", group = "Robot")
-
-public class MotorTest extends OpMode {
-    // This declares the four motors needed
-
-    public DcMotor bottomShooter = null;
-    public DcMotor topShooter = null;
-
-    DcMotor inhale;
-    DcMotor indixer;
-
-    public Servo servo67;
-
-    // This declares the IMU needed to get the current direction the robot is facing
-    IMU imu;
-    //SIX SEVEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@TeleOp(name = ":/", group = "Robot")
+@Disabled
+public class FAHHH extends OpMode {
     @Override
     public void init() {
-//        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
-//        backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
-//        frontLeftDrive = hardwareMap.get(DcMotor.class, "front_left_drive");
-//        backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
-//        bottomShooter = hardwareMap.get(DcMotor.class, "bottom_shooter");        frontRightDrive = hardwareMap.get(DcMotor.class, "front_right_drive");
-//        backRightDrive = hardwareMap.get(DcMotor.class, "back_right_drive");
-//        frontLeftDrive = hardwareMap.get(DcMotor.class, "front_left_drive");
-//        backLeftDrive = hardwareMap.get(DcMotor.class, "back_left_drive");
-        bottomShooter = hardwareMap.get(DcMotor.class, "bottom_shooter");
-        topShooter = hardwareMap.get(DcMotor.class, "top_shooter");
-//        indixer = hardwareMap.get(DcMotor.class, "indixer");
-//        inhale = hardwareMap.get(DcMotor.class, "inhale");
-        servo67 = hardwareMap.get(Servo.class, "servo67");
-
-
-        // EEE
-
-        topShooter.setDirection(DcMotor.Direction.REVERSE);
-        bottomShooter.setDirection(DcMotor.Direction.REVERSE);
-
-        imu = hardwareMap.get(IMU.class, "imu");
-        // This needs to be changed to match the orientation on your robot
-        RevHubOrientationOnRobot.LogoFacingDirection logoDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.UP;
-        RevHubOrientationOnRobot.UsbFacingDirection usbDirection =
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
-
-        RevHubOrientationOnRobot orientationOnRobot = new
-                RevHubOrientationOnRobot(logoDirection, usbDirection);
-        imu.initialize(new IMU.Parameters(orientationOnRobot));
     }
-
     @Override
     public void loop() {
+        telemetry.addLine("▒▒▒▒▒▄██████████▄▒▒▒▒▒");
+        telemetry.addLine("▒▒▒▄██████████████▄▒▒▒");
+        telemetry.addLine("▒▒██████████████████▒▒");
+        telemetry.addLine("▒▐███▀▀▀▀▀██▀▀▀▀▀███▌▒");
+        telemetry.addLine("▒███▒▒▌■▐▒▒▒▒▌■▐▒▒███▒");
+        telemetry.addLine("▒▐██▄▒▀▀▀▒▒▒▒▀▀▀▒▄██▌▒");
+        telemetry.addLine("▒▒▀████▒▄▄▒▒▄▄▒████▀▒▒");
+        telemetry.addLine("▒▒▐███▒▒▒▀▒▒▀▒▒▒███▌▒▒");
+        telemetry.addLine("▒▒███▒▒▒▒▒▒▒▒▒▒▒▒███▒▒");
+        telemetry.addLine("▒▒▒██▒▒▀▀▀▀▀▀▀▀▒▒██▒▒▒");
+        telemetry.addLine("▒▒▒▐██▄▒▒▒▒▒▒▒▒▄██▌▒▒▒");
+        telemetry.addLine("▒▒▒▒▀████████████▀▒▒▒▒");
+
+        telemetry.addLine("⣿⣿⣿⣿⣿⣿⣿⡿⡛⠟⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿");
+        telemetry.addLine("⣿⣿⣿⣿⣿⣿⠿⠨⡀⠄⠄⡘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿  ");
+        telemetry.addLine("⣿⣿⣿⣿⠿⢁⠼⠊⣱⡃⠄⠈⠹⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ");
+        telemetry.addLine("⣿⣿⡿⠛⡧⠁⡴⣦⣔⣶⣄⢠⠄⠄⠹⣿⣿⣿⣿⣿⣿⣿⣤⠭⠏⠙⢿⣿⣿⣿⣿⣿  ");
+        telemetry.addLine("⣿⡧⠠⠠⢠⣾⣾⣟⠝⠉⠉⠻⡒⡂⠄⠙⠻⣿⣿⣿⣿⣿⡪⠘⠄⠉⡄⢹⣿⣿⣿⣿ ");
+        telemetry.addLine("⣿⠃⠁⢐⣷⠉⠿⠐⠑⠠⠠⠄⣈⣿⣄⣱⣠⢻⣿⣿⣿⣿⣯⠷⠈⠉⢀⣾⣿⣿⣿⣿  ");
+        telemetry.addLine("⣿⣴⠤⣬⣭⣴⠂⠇⡔⠚⠍⠄⠄⠁⠘⢿⣷⢈⣿⣿⣿⣿⡧⠂⣠⠄⠸⡜⡿⣿⣿⣿ ");
+        telemetry.addLine("⣿⣇⠄⡙⣿⣷⣭⣷⠃⣠⠄⠄⡄⠄⠄⠄⢻⣿⣿⣿⣿⣿⣧⣁⣿⡄⠼⡿⣦⣬⣰⣿ ");
+        telemetry.addLine("⣿⣷⣥⣴⣿⣿⣿⣿⠷⠲⠄⢠⠄⡆⠄⠄⠄⡨⢿⣿⣿⣿⣿⣿⣎⠐⠄⠈⣙⣩⣿⣿ ");
+        telemetry.addLine("⣿⣿⣿⣿⣿⣿⢟⠕⠁⠈⢠⢃⢸⣿⣿⣶⡘⠑⠄⠸⣿⣿⣿⣿⣿⣦⡀⡉⢿⣧⣿⣿  ");
+        telemetry.addLine("⣿⣿⣿⣿⡿⠋⠄⠄⢀⠄⠐⢩⣿⣿⣿⣿⣦⡀⠄⠄⠉⠿⣿⣿⣿⣿⣿⣷⣨⣿⣿⣿ ");
+        telemetry.addLine("⣿⣿⣿⡟⠄⠄⠄⠄⠄⠋⢀⣼⣿⣿⣿⣿⣿⣿⣿⣶⣦⣀⢟⣻⣿⣿⣿⣿⣿⣿⣿⣿  ");
+        telemetry.addLine("⣿⣿⣿⡆⠆⠄⠠⡀⡀⠄⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿ ");
+        telemetry.addLine("⣿⣿⡿⡅⠄⠄⢀⡰⠂⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿");
+
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣤⣤⣤⣄⡀ ⠀⠀⠀⠀⠀⠀⠀");
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀");
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀");
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀");
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀");
         telemetry.addLine("⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣷⠀");
-        telemetry.addLine("⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿ 1234567890zbcdefghijk");
+        telemetry.addLine("⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿ ");
         telemetry.addLine("⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀");
         telemetry.addLine("⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀");
         telemetry.addLine("⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀");
@@ -123,47 +106,20 @@ public class MotorTest extends OpMode {
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀");
         telemetry.addLine("⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
 
-        double topShooterPower = 0.0;
-        double bottomShooterPower = 0.0;
-
-        // If you press the A button, then you reset the Yaw to be zero from the way
-        // the robot is currently pointing
-
-        //revving the shooter ;D
-        if (gamepad1.right_trigger > 0.0) {
-            topShooterPower = gamepad1.right_trigger;
-            bottomShooterPower = gamepad1.right_trigger;
-        }
-
-        //short range
-        if (gamepad1.x) {
-            topShooterPower = 1;
-            bottomShooterPower = 1;
-        }
-
-        //long range shot
-        if (gamepad1.y) {
-            topShooterPower = 0.79;
-            bottomShooterPower = 0.79;
-        }
-
-        //spit the ball out by shooting at low power
-        if (gamepad1.b) {
-            topShooterPower = 0.21;
-            bottomShooterPower = 0.21;
-        }
-
-        if (gamepad1.dpad_up) {
-            servo67.setPosition(0);
-        }
-
-        if (gamepad1.dpad_down) {
-            servo67.setPosition(1);
-        }
-        // If you press the left bumper, you get a drive from the point of view of the robot
-        // (much like driving an RC vehicle)
-
-        bottomShooter.setPower(topShooterPower);
-        topShooter.setPower(bottomShooterPower);
+        telemetry.addLine(":::::::-+**%%@@%#+:::::::");
+        telemetry.addLine(".::::-#@@@@@ @@@@@@@*::...");
+        telemetry.addLine(".:::=@@@@@@@ @@@@@@@@%-::.");
+        telemetry.addLine(".::-@@@@@#+#@@+-=#%@*::..");
+        telemetry.addLine(".:-*@@@%*+++%%+=--*@#:::");
+        telemetry.addLine(".:-#@@%=+*#+==+++--*=:..");
+        telemetry.addLine(".:-#@@%--==-:::--::-::::");
+        telemetry.addLine(".:-*+@%-:-==-:::::=#@@**");
+        telemetry.addLine(".:-==@%=-=++=---::=*%%--");
+        telemetry.addLine(".:::=#@#---=--:::=-:::::");
+        telemetry.addLine(".::.:=@@%+--:::-=-::::..");
+        telemetry.addLine(".:::-+%@@%%*+--::-:--::.");
+        telemetry.addLine(".:=%@*-%%+==-::::-:+@#++");
+        telemetry.addLine(".:*@@%::==-::::-::-%@@@@");
+        telemetry.addLine("::*@@@#:::::::-::-#@@@@@");
     }
 }
