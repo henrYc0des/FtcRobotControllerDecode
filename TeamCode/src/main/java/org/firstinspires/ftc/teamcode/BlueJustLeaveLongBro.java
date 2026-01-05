@@ -55,7 +55,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Blue Just Leave Long Bro", group="Robot")
+@Autonomous(name="Blue Just Leave Long Bro (Blue Post Side)", group="Robot")
 
 public class BlueJustLeaveLongBro extends LinearOpMode {
     // This declares the four motors needed
@@ -126,13 +126,13 @@ public class BlueJustLeaveLongBro extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the OpMode has not been stopped along the way.
 
-        // Step 1:  Drive Left
-        frontLeftDrive.setPower(1);
-        backLeftDrive.setPower(-1);
-        frontRightDrive.setPower(-1);
-        backRightDrive.setPower(1);
+        // Step 1:  Drive right
+        frontLeftDrive.setPower(-1);
+        backLeftDrive.setPower(1);
+        frontRightDrive.setPower(1);
+        backRightDrive.setPower(-1);
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() < .5)) {
+        while (opModeIsActive() && (runtime.seconds() < .267)) {
             telemetry.addData("Path", "Leg 1: %4.1f S Elapsed", runtime.seconds());
             telemetry.update();
         }

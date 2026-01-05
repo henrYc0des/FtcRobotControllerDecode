@@ -146,23 +146,23 @@ public class SixSevenDrive extends OpMode {
 
         //index low power to push ball into shooter wheel
         if (gamepad1.right_trigger > 0.0) {
-            indixerPower = .75;
+            indixerPower = .8;
             inhalePower = .5;
         }
 
-        //all
-        //short range shot
+        //
+        //long range shot
         if (gamepad1.x) {
             topShooterPower = 1;
             bottomShooterPower = 1;
             inhalePower = .67;
 //            indixerPower = -.5;
 
-        } else {
+        } /*else {
             topShooterPower = 0;
             bottomShooterPower = 0;
             indixerPower = 0;
-        }
+        }*/
 
         if (gamepad1.xWasPressed()) {
             timestamp = System.currentTimeMillis();
@@ -175,21 +175,34 @@ public class SixSevenDrive extends OpMode {
             backingUp = false;
         }
 
-        //long range shot not tested yet
+        //short range
         if (gamepad1.y) {
-            topShooterPower = 0.79;
-            bottomShooterPower = 0.79;
+            topShooterPower = .9;
+            bottomShooterPower = .96;
+            inhalePower = .67;
+        } /*else {
+            topShooterPower = 0;
+            bottomShooterPower = 0;
+            indixerPower = 0;
+        }*/
+
+        if (gamepad1.yWasPressed()) {
+            timestamp = System.currentTimeMillis();
+            backingUp = true;
+            indixerPower = -0.67;
         }
 
         //indexer reverse
         if (gamepad1.b) {
-            indixerPower = -.2;
+            topShooterPower = -0.4;
+            bottomShooterPower = -0.4;
+            indixerPower = -.67;
         }
 
         //should prolly use this as inhale & indixer keybind
         if (gamepad1.a) {
             inhalePower = 1;
-            indixerPower = .45;
+            indixerPower = .67;
         }
 
         //These two are for angle
